@@ -11,6 +11,22 @@ function generateKeyPair() {
     return keyPairs;
 }
 
+function signMessage(privateKey, message) {
+    const signer = crypto.createSign("SHA256");
+
+    signer.update(message);
+    return signer.sign(privateKey, "hex");
+}
+
+function verifyMessage(publickey, signature, message) {
+    const verifier = crypto.createVerify("SHA256");
+
+    verifier.update(message);
+    return verifier.verify(publickey, signature, "hex");
+}
+
 const keys = generateKeyPair();
-console.log(keys.privateKey);
-console.log(keys.publicKey);
+const signature = signMessage(keys.privateKey, "{from: Jaxson; to: Bob, amount 20}");
+const isValid = verifyMessage(keys.publicKey, signature, "{from: Bob; to: Jaxson, amount 20}");
+
+console.log(isValid);
