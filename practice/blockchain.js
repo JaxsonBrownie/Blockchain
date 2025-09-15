@@ -66,6 +66,31 @@ class BlockChain {
         this.chain.push(newBlock);
         this.pendingTransactions = [];
     }
+
+    // checks if the block chain is valid
+    isChainValid() {
+        let i = 1;
+        let currentBlock = this.chain[i];
+        let prevBlock = this.chain[i-1];
+        
+        while (i < this.chain.length) {
+            // check if previous blocks hash matches the current block
+            if (prevBlock.hash != currentBlock.prevHash) {
+                return false;
+            }
+
+            // verify the current blocks hash
+            if (currentBlock.hash != currentBlock.createHash()) {
+                return false;
+            }
+
+            i ++;
+            currentBlock = this.chain[i];
+            prevBlock = this.chain[i-1];
+        }
+
+        return true;
+    }
 }
 
 
@@ -77,7 +102,7 @@ const publicKey = keys.publicKey;
 const privateKey = keys.privateKey;
 
 // set up test transaction
-const message = "test message";
+const message = JSON.stringify({to: "Jaxson", from: "Bob", amount: 500});
 const transaction = {
     message: message,
     publicKey: publicKey,
