@@ -32,6 +32,19 @@ class Block {
     }
 }
 
+
+
+class BlockChain {
+    constructor(difficulty) {
+        this.difficulty = difficulty;
+        this.chain = [];
+        this.pendingTransactions = [];
+    }
+}
+
+
+
+
 const testBlock = new Block(1, "test transaction", "testprevhash");
 testBlock.mineBlock(5);
 
