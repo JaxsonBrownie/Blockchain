@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const signatures = require("./signatures.js");
 
 class Block {
     // define constructor to set up properties
@@ -68,11 +69,23 @@ class BlockChain {
 }
 
 
-const blockChain = new BlockChain(5);
+const blockChain = new BlockChain(4);
 
-blockChain.addPendingTransaction({"to": "Jaxson", "from": "Kimsa", "amount": 500});
-blockChain.addPendingTransaction({"to": "Jaxson", "from": "Kimsa", "amount": 400});
-blockChain.addPendingTransaction({"to": "Greg", "from": "Kimsa", "amount": 500});
-blockChain.addPendingTransaction({"to": "Jasminka", "from": "Aran", "amount": 500});
+// set up signing keys
+const keys = signatures.generateKeyPair();
+const publicKey = keys.publicKey;
+const privateKey = keys.privateKey;
 
+// set up test transaction
+const message = "test message";
+const transaction = {
+    message: message,
+    publicKey: publicKey,
+    signature: signatures.signMessage(privateKey, message)
+};
+
+// add to the blockchain
+blockChain.addPendingTransaction(transaction);
 blockChain.createBlock();
+
+console.dir(blockChain, { depth: null} );
