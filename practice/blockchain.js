@@ -37,15 +37,32 @@ class Block {
 class BlockChain {
     constructor(difficulty) {
         this.difficulty = difficulty;
-        this.chain = [];
+        this.chain = [createGenesisBlock()];
+        this.pendingTransactions = [];
+    }
+
+    // creates the genesis block
+    createGenesisBlock() {
+        const gensisBlock = new Block(0, [], "");
+        return gensisBlock;
+    }
+
+    // adds a pending transaction
+    addPendingTransaction(transaction) {
+        this.pendingTransactions.push(transaction);
+    }
+
+    // groups all pending transactions and creates a new block
+    createBlock() {
+        // get previous block (for its hash)
+        const prevBlock = this.chain[this.chain.length - 1];
+
+        // create new block to add to chain
+        const newBlock = new Block(this.chain.length, this.pendingTransactions, prevBlock.hash);
+
+        // add new block to the chain (after mining)
+        newBlock.mineBlock(this.difficulty);
+        this.chain.push(newBlock);
         this.pendingTransactions = [];
     }
 }
-
-
-
-
-const testBlock = new Block(1, "test transaction", "testprevhash");
-testBlock.mineBlock(5);
-
-console.log(testBlock);
