@@ -25,8 +25,4 @@ function verifyMessage(publickey, signature, message) {
     return verifier.verify(publickey, signature, "hex");
 }
 
-const keys = generateKeyPair();
-const signature = signMessage(keys.privateKey, "{from: Jaxson; to: Bob, amount 20}");
-const isValid = verifyMessage(keys.publicKey, signature, "{from: Bob; to: Jaxson, amount 20}");
-
-console.log(isValid);
+module.exports = { generateKeyPair, signMessage, verifyMessage };
