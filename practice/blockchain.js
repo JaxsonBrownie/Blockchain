@@ -6,7 +6,7 @@ class Block {
         this.transactions = transactions;
         this.prevHash = prevHash;
         this.nonce = 0;
-        this.hash = createHash();
+        this.hash = this.createHash();
     }
 
     createHash() {
@@ -16,5 +16,4 @@ class Block {
         return hash;
     }
 }
-
 const testBlock = new Block(1, "test transaction", "testprevhash");
