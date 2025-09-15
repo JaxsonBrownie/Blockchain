@@ -113,4 +113,7 @@ const transaction = {
 blockChain.addPendingTransaction(transaction);
 blockChain.createBlock();
 
+// verify blockchain
+console.log("IS VALID? " + blockChain.isChainValid());
+
 console.dir(blockChain, { depth: null} );
