@@ -37,14 +37,14 @@ class Block {
 class BlockChain {
     constructor(difficulty) {
         this.difficulty = difficulty;
-        this.chain = [createGenesisBlock()];
+        this.chain = [this.createGenesisBlock()];
         this.pendingTransactions = [];
     }
 
     // creates the genesis block
     createGenesisBlock() {
-        const gensisBlock = new Block(0, [], "");
-        return gensisBlock;
+        const genesisBlock = new Block(0, [], "");
+        return genesisBlock;
     }
 
     // adds a pending transaction
@@ -66,3 +66,13 @@ class BlockChain {
         this.pendingTransactions = [];
     }
 }
+
+
+const blockChain = new BlockChain(5);
+
+blockChain.addPendingTransaction({"to": "Jaxson", "from": "Kimsa", "amount": 500});
+blockChain.addPendingTransaction({"to": "Jaxson", "from": "Kimsa", "amount": 400});
+blockChain.addPendingTransaction({"to": "Greg", "from": "Kimsa", "amount": 500});
+blockChain.addPendingTransaction({"to": "Jasminka", "from": "Aran", "amount": 500});
+
+blockChain.createBlock();
