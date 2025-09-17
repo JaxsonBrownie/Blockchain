@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 const signatures = require("./signatures.js");
 
+
 class Block {
     // define constructor to set up properties
     constructor(index, transactions, prevHash) {
@@ -32,7 +33,6 @@ class Block {
         console.log("Block mined! Hash: " + this.hash);
     }
 }
-
 
 
 class BlockChain {
@@ -94,8 +94,26 @@ class BlockChain {
 }
 
 
-const blockChain = new BlockChain(4);
+// create a block object
+const blockChain = new BlockChain(3);
 
+// simulate receiving loyalty points
+blockChain.addPendingTransaction({receiver: "Jaxson", amount: 200});
+blockChain.addPendingTransaction({receiver: "Jasminka", amount: 150});
+blockChain.addPendingTransaction({receiver: "Gregory", amount: 300});
+blockChain.createBlock();
+
+// simulate redeeming loyalty points
+blockChain.addPendingTransaction({redeemer: "Jasminka", amount: 50});
+blockChain.addPendingTransaction({redemenr: "Jaxson", amount: 100});
+blockChain.createBlock();
+
+// print out full blockchain
+console.dir(blockChain, {depth: null});
+
+
+// OPTIONAL: Includes signing process (public key / private key)
+/*
 // set up signing keys
 const keys = signatures.generateKeyPair();
 const publicKey = keys.publicKey;
@@ -117,3 +135,4 @@ blockChain.createBlock();
 console.log("IS VALID? " + blockChain.isChainValid());
 
 console.dir(blockChain, { depth: null} );
+*/
